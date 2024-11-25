@@ -11,18 +11,8 @@
 	import { currency, format, formatRupiah } from '$lib/utils';
 	import DiscountList from './DiscountList.svelte';
 
-	let { items, increaseQty, decreaseQty }: CartProps = $props();
+	let { shop, onSubmit }: CartProps = $props();
 
-	let currentItems = $state(items);
-	let currentItemsArr = $derived(Object.values(currentItems));
-	let paymentDisplay = $state<string>('');
-	let payment = $derived(Number(paymentDisplay.substring(3).replaceAll('.', '')));
-	$inspect(payment);
-	let discount = $state(0);
-	let total = $derived(
-		currentItemsArr.reduce((total, item) => (total = total + item.price * item.quantity), 0)
-	);
-	const totalAfterDisc = $derived(total - total * (discount / 100));
 </script>
 
 <Card.Root>
@@ -32,24 +22,24 @@
 	</Card.Header>
 	<Separator class="mt-5" />
 	<Card.Content class="flex flex-col gap-5">
-		{#if currentItemsArr.length === 0}
+		{#if shop.itemsArr.length === 0}
 			Empty Cart
 		{:else}
-			{#each currentItemsArr as item}
+			{#each shop.itemsArr as item}
 				<div class="flex flex-col items-center gap-5">
 					<div>
 						<p>{item.name}</p>
 						<p>{formatRupiah(item.price)}</p>
 					</div>
 					<div class="flex items-center gap-2">
-						<Plus class="pressed" onclick={() => increaseQty(item.id)} />
+						<Plus class="pressed" onclick={() => shop.increaseQty(item.id)} />
 						<Input
 							type="number"
 							class="w-10 text-center lg:w-12"
 							bind:value={item.quantity}
 							min={1}
 						/>
-						<Minus class="pressed" onclick={() => decreaseQty(item.id)} />
+						<Minus class="pressed" onclick={() => shop.decreaseQty(item.id)} />
 					</div>
 				</div>
 				<Separator />
@@ -59,18 +49,18 @@
 	<Card.Footer class="flex flex-wrap gap-4 text-sm font-bold">
 		<div class="flex items-center justify-center">
 			<p class="">Total:</p>
-			<p class="">{formatRupiah(total)}</p>
+			<p class="">{formatRupiah(shop.getTotal().total)}</p>
 		</div>
 		<DiscountList
 			discounts={DEFAULT_DISCOUNTS}
-			onSelected={(selected: number) => (discount = selected)}
+			onSelected={(selected: number) => (shop.setDiscount(selected))}
 		/>
 		<div class="flex items-center justify-center">
 			<p class="">Grand Total:&nbsp;</p>
-			<p class="">{formatRupiah(totalAfterDisc)}</p>
+			<p class="">{formatRupiah(shop.getTotal().totalAfterDisc)}</p>
 		</div>
 		<div class="flex items-center justify-center">
-			{#if paymentDisplay === ''}
+			{#if shop.paymentDisplay === ''}
 				<p>Rp&nbsp;</p>
 			{/if}
 			<input
@@ -78,17 +68,17 @@
 				inputmode="numeric"
 				class="w-full border-b-2 border-primary focus:outline-none focus:ring-0"
 				use:format={currency}
-				bind:value={paymentDisplay}
+				bind:value={shop.paymentDisplay}
 				maxlength="16"
 			/>
 		</div>
-		{#if payment >= totalAfterDisc}
+		{#if shop.payment >= shop.getTotal().totalAfterDisc}
 			<div class="flex items-center justify-center">
 				<p class="">Changes:&nbsp;</p>
-				<p class="">{formatRupiah(payment - totalAfterDisc)}</p>
+				<p class="">{formatRupiah(shop.payment - shop.getTotal().totalAfterDisc)}</p>
 			</div>
 		{/if}
 	</Card.Footer>
 	<Separator />
-	<Printer class="pressed m-5 mx-auto h-11 w-11" />
+	<Printer class="pressed m-5 mx-auto h-11 w-11" onclick={onSubmit}/>
 </Card.Root>

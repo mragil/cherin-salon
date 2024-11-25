@@ -1,3 +1,4 @@
+import type Shop from "$lib/Shop.svelte"
 
 export type Item  = {
 	id: string,
@@ -35,7 +36,6 @@ export type ShopItem = {
 }
 
 export interface CartProps {
-	items: ShopItem,
-	increaseQty: (id: string) => void,
-	decreaseQty: (id: string) => void
+	shop: Shop,
+	onSubmit: () => void
 }

@@ -10,11 +10,9 @@
 	let { data }: { data: PageData } = $props();
 	const shop = new ShopData();
 
-	const cartProps = {
-		increaseQty: (id: string) => shop.increaseQty(id),
-		decreaseQty: (id: string) => {shop.decreaseQty(id)},
-		items: shop.items!
-	};
+	const saveData = () => {
+		alert(JSON.stringify(shop.items));
+	}
 </script>
 
 <div class="flex flex-row justify-center gap-4 p-4">
@@ -25,19 +23,19 @@
 		{:then categories}
 			<CategoryList {categories} />
 		{/await}
-		<div class="scrollbar-hide overflow-y-scroll">
+		<div class="overflow-y-scroll scrollbar-hide">
 			{#await data.items}
 				Loading items...
 			{:then items}
-				<ItemList {items} onPress={(data: Item) => shop.addToCart(data) }/>
+				<ItemList {items} onPress={(data: Item) => shop.addToCart(data)} />
 			{/await}
 		</div>
 	</div>
 	<!-- End Shop -->
 
 	<!-- Cart -->
-	<div class="scrollbar-hide w-2/6 h-[47rem] overflow-y-scroll">
-		<Cart {...cartProps} />
+	<div class="h-[47rem] w-2/6 overflow-y-scroll scrollbar-hide">
+		<Cart {shop} onSubmit={saveData}/>
 	</div>
 	<!-- End Cart -->
 </div>

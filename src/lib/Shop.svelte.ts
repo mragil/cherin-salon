@@ -3,6 +3,10 @@ import type { Item, ShopItem } from "$lib/types";
 class Shop {
 	items = $state<ShopItem>();
 	discount = $state(0);
+	itemsArr = $derived(Object.values(this.items!));
+	paymentDisplay = $state('');
+	payment = $derived(Number(this.paymentDisplay.substring(3).replaceAll('.', '')));
+
 	constructor() {
 		this.items = {};
 		this.discount = 0;
@@ -25,6 +29,19 @@ class Shop {
 			delete this.items![id];
 		} else {
 			this.items![id].quantity = this.items![id].quantity - 1;
+		}
+	}
+
+	setDiscount(discount: number) {
+		this.discount = discount;
+	}
+
+	getTotal() {
+		const total = this.itemsArr.reduce((total, item) => (total = total + item.price * item.quantity), 0);
+		const totalAfterDisc = total - total * (this.discount / 100);
+		return {
+			total,
+			totalAfterDisc
 		}
 	}
 }
