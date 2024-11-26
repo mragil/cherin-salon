@@ -2,6 +2,7 @@
 	import Cart from '$lib/components/pages/pos/Cart.svelte';
 	import CategoryList from '$lib/components/pages/pos/CategoryList.svelte';
 	import ItemList from '$lib/components/pages/pos/ItemList.svelte';
+	import { pb } from '$lib/pocketbase';
 	import ShopData from '$lib/Shop.svelte';
 	import type { Item } from '$lib/types';
 
@@ -10,9 +11,23 @@
 	let { data }: { data: PageData } = $props();
 	const shop = new ShopData();
 
-	const saveData = () => {
-		alert(JSON.stringify(shop.items));
-	}
+	const saveAndOrder = async () => {
+		try {
+			const order = {
+				items: shop.itemsArr,
+				total: shop.total,
+				totalAfterDiscount: shop.totalAfterDisc,
+				payment: shop.payment,
+				discount: shop.discount
+			};
+			await pb.collection('orders').create(order);
+			shop.reset();
+			alert('Success');
+
+		} catch (error) {
+			alert('Error!!!');
+		}
+	};
 </script>
 
 <div class="flex flex-row justify-center gap-4 p-4">
@@ -35,7 +50,7 @@
 
 	<!-- Cart -->
 	<div class="h-[47rem] w-2/6 overflow-y-scroll scrollbar-hide">
-		<Cart {shop} onSubmit={saveData}/>
+		<Cart {shop} onSubmit={saveAndOrder} />
 	</div>
 	<!-- End Cart -->
 </div>

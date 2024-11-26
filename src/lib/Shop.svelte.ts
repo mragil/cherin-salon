@@ -1,11 +1,13 @@
 import type { Item, ShopItem } from "$lib/types";
 
 class Shop {
-	items = $state<ShopItem>();
+	items = $state<ShopItem>({});
 	discount = $state(0);
 	itemsArr = $derived(Object.values(this.items!));
 	paymentDisplay = $state('');
 	payment = $derived(Number(this.paymentDisplay.substring(3).replaceAll('.', '')));
+	total = $derived(this.itemsArr.reduce((total, item) => (total = total + item.price * item.quantity), 0));
+	totalAfterDisc = $derived(this.total - this.total * (this.discount / 100));
 
 	constructor() {
 		this.items = {};
@@ -36,13 +38,10 @@ class Shop {
 		this.discount = discount;
 	}
 
-	getTotal() {
-		const total = this.itemsArr.reduce((total, item) => (total = total + item.price * item.quantity), 0);
-		const totalAfterDisc = total - total * (this.discount / 100);
-		return {
-			total,
-			totalAfterDisc
-		}
+	reset() {
+		this.items = {};
+		this.discount = 0;
+		this.paymentDisplay = '';
 	}
 }
 

@@ -23,6 +23,7 @@ export interface CategoryListProps {
 
 export interface DiscountListProps {
 	discounts: number[],
+	selected: number,
 	onSelected: (selected: number) => void
 }
 

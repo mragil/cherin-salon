@@ -49,15 +49,16 @@
 	<Card.Footer class="flex flex-wrap gap-4 text-sm font-bold">
 		<div class="flex items-center justify-center">
 			<p class="">Total:</p>
-			<p class="">{formatRupiah(shop.getTotal().total)}</p>
+			<p class="">{formatRupiah(shop.total)}</p>
 		</div>
 		<DiscountList
 			discounts={DEFAULT_DISCOUNTS}
+			selected={shop.discount}
 			onSelected={(selected: number) => (shop.setDiscount(selected))}
 		/>
 		<div class="flex items-center justify-center">
 			<p class="">Grand Total:&nbsp;</p>
-			<p class="">{formatRupiah(shop.getTotal().totalAfterDisc)}</p>
+			<p class="">{formatRupiah(shop.totalAfterDisc)}</p>
 		</div>
 		<div class="flex items-center justify-center">
 			{#if shop.paymentDisplay === ''}
@@ -72,13 +73,12 @@
 				maxlength="16"
 			/>
 		</div>
-		{#if shop.payment >= shop.getTotal().totalAfterDisc}
+		{#if shop.payment >= shop.totalAfterDisc}
 			<div class="flex items-center justify-center">
 				<p class="">Changes:&nbsp;</p>
-				<p class="">{formatRupiah(shop.payment - shop.getTotal().totalAfterDisc)}</p>
+				<p class="">{formatRupiah(shop.payment - shop.totalAfterDisc)}</p>
 			</div>
+			<Printer class="pressed m-5 mx-auto h-11 w-11" onclick={onSubmit}/>
 		{/if}
 	</Card.Footer>
-	<Separator />
-	<Printer class="pressed m-5 mx-auto h-11 w-11" onclick={onSubmit}/>
 </Card.Root>
