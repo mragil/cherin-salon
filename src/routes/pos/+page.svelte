@@ -11,9 +11,9 @@
 
 	let { data }: { data: PageData } = $props();
 	const shop = new ShopData();
+	const printer = new ReceiptPrinter();
 
 	async function saveAndOrder() {
-		const printer = new ReceiptPrinter();
 
 		try {
 			const order = {
