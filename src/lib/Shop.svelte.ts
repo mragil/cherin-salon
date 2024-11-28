@@ -14,6 +14,17 @@ class Shop {
 		this.discount = 0;
 	}
 
+	getMappedData() {
+		return {
+			items: this.itemsArr,
+			total: this.total,
+			totalAfterDiscount: this.totalAfterDisc,
+			payment: this.payment,
+			discount: this.discount,
+			cashier: 'Kasir'
+		}
+	}
+
 	addToCart(item: Item) {
 		if(this.items![item.id]) {
 			this.items![item.id] = {...item, quantity: this.items![item.id].quantity + 1};
