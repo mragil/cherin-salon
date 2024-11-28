@@ -6,12 +6,15 @@
 	import ShopData from '$lib/Shop.svelte';
 	import type { Item } from '$lib/types';
 
+	import ReceiptPrinter from '$lib/ReceiptPrinter';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 	const shop = new ShopData();
 
-	const saveAndOrder = async () => {
+	async function saveAndOrder() {
+		const printer = new ReceiptPrinter();
+
 		try {
 			const order = {
 				items: shop.itemsArr,
@@ -20,14 +23,13 @@
 				payment: shop.payment,
 				discount: shop.discount
 			};
+			printer.printData(order);
 			await pb.collection('orders').create(order);
 			shop.reset();
-			alert('Success');
-
 		} catch (error) {
 			alert('Error!!!');
 		}
-	};
+	}
 </script>
 
 <div class="flex flex-row justify-center gap-4 p-4">

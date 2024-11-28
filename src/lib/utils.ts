@@ -31,7 +31,7 @@ export const formatRupiah = (price: number) => new Intl.NumberFormat('id-ID', {
 		
 	}
 
-export	const currency = (value: string) => {
+export const currency = (value: string) => {
 	const onlyNumbers = value.replace(/[^\d]/g, '')
 
 	return formatRupiah(Number(onlyNumbers));
