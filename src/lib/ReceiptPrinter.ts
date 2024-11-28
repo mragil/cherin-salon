@@ -18,11 +18,14 @@ type Printer = {
 }
 
 type Data = {
+  id: string,
+  transactionDate: string,
   items: SelectedItem[],
   total: number,
   totalAfterDiscount: number,
   payment: number,
-  discount: number
+  discount: number,
+  cashier: string
 }
 
 class ReceiptPrinter {
@@ -52,11 +55,11 @@ class ReceiptPrinter {
           );
           await print.writeText(' 0812-3456-7890 - IG: @dduww', { align: 'center' });
           await print.writeLineBreak();
-          await print.writeText('No.Transaksi: ', {
+          await print.writeText(`ID-Transaksi: ${shopData.id}`, {
             align: 'center'
           });
-          await print.writeText('Kasir: Dwi Cantik Sekali', { align: 'center' });
-          await print.writeText('2024-11-24 17:20:18', { align: 'center' });
+          await print.writeText(`Kasir: ${shopData.cashier}`, { align: 'center' });
+          await print.writeText(new Date(shopData.transactionDate).toLocaleString('id-ID'), { align: 'center' });
           await print.writeDashLine();
 
           for (let index = 0; index < shopData.items.length; index++) {
@@ -67,10 +70,11 @@ class ReceiptPrinter {
           }
 
           // Print Total
-          await print.writeTextWith2Column('Total :', (shopData.total).toLocaleString('id-ID'));
+          await print.writeTextWith2Column('Total :', `Rp${(shopData.total).toLocaleString('id-ID')}`);
           await print.writeTextWith2Column('Diskon :', `${shopData.discount}%`);
-          await print.writeTextWith2Column('Bayar :', (shopData.payment).toLocaleString('id-ID'));
-          await print.writeTextWith2Column('Kembali :', (shopData.payment - shopData.totalAfterDiscount).toLocaleString('id-ID'));
+          await print.writeTextWith2Column('Grand Total:', `Rp${(shopData.totalAfterDiscount).toLocaleString('id-ID')}`);
+          await print.writeTextWith2Column('Bayar :', `Rp${(shopData.payment).toLocaleString('id-ID')}`);
+          await print.writeTextWith2Column('Kembali :', `Rp ${(shopData.payment - shopData.totalAfterDiscount).toLocaleString('id-ID')}`);
 
           // Print Footer
           await print.writeLineBreak();

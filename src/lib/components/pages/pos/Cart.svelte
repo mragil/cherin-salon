@@ -19,7 +19,6 @@
 <Card.Root>
 	<Card.Header>
 		<Card.Title>Cart</Card.Title>
-		<Card.Description>Order #123</Card.Description>
 	</Card.Header>
 	<Separator class="mt-5" />
 	<Card.Content class="flex flex-col gap-5">

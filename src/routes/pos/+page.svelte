@@ -14,17 +14,17 @@
 	const printer = new ReceiptPrinter();
 
 	async function saveAndOrder() {
-
 		try {
 			const order = {
 				items: shop.itemsArr,
 				total: shop.total,
 				totalAfterDiscount: shop.totalAfterDisc,
 				payment: shop.payment,
-				discount: shop.discount
+				discount: shop.discount,
+				cashier: 'Kasir'
 			};
-			printer.printData(order);
-			await pb.collection('orders').create(order);
+			const savedOrder = await pb.collection('orders').create(order);
+			printer.printData({...order, id: savedOrder.id, transactionDate: savedOrder.created});
 			shop.reset();
 		} catch (error) {
 			alert('Error!!!');
