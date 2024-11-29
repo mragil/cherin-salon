@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as Dialog from "$lib/components/ui/dialog";
 	import Cart from '$lib/components/pages/pos/Cart.svelte';
 	import CategoryList from '$lib/components/pages/pos/CategoryList.svelte';
 	import ItemList from '$lib/components/pages/pos/ItemList.svelte';
@@ -7,14 +6,14 @@
 	import ShopData from '$lib/Shop.svelte';
 	import type { Item } from '$lib/types';
 
+	import ReceiptDialog from '$lib/components/pages/pos/ReceiptDialog.svelte';
 	import ReceiptPrinter from '$lib/ReceiptPrinter';
+	import type { RecordModel } from 'pocketbase';
 	import type { PageData } from './$types';
-	import type { RecordModel } from "pocketbase";
-	import Button from "$lib/components/ui/button/button.svelte";
 
 	let { data }: { data: PageData } = $props();
 	let shouldPrintReceipt = $state(false);
-	let savedOrder: RecordModel;
+	let savedOrder = $state<RecordModel | null>(null);
 	const shop = new ShopData();
 	const printer = new ReceiptPrinter();
 
@@ -28,13 +27,20 @@
 	}
 
 	function printReceipt() {
-		printer.printData({...shop.getMappedData(), id: savedOrder.id, transactionDate: savedOrder.created});
+		if (savedOrder) {
+			printer.printData({
+				...shop.getMappedData(),
+				id: savedOrder.id,
+				transactionDate: savedOrder.created
+			});
+		}
 	}
 
 	function onClosePrint(open: boolean) {
-		if(!open) {
+		if (!open) {
 			shop.reset();
 		}
+		window.scrollTo(0, 0);
 	}
 </script>
 
@@ -63,14 +69,4 @@
 	<!-- End Cart -->
 </div>
 
-<Dialog.Root bind:open={shouldPrintReceipt} onOpenChange={onClosePrint}>
-  <Dialog.Trigger/>
-  <Dialog.Content>
-    <Dialog.Header>
-      <Dialog.Title>Print Receipt</Dialog.Title>
-      <Dialog.Description>
-        <Button onclick={printReceipt}>PRINT</Button>
-      </Dialog.Description>
-    </Dialog.Header>
-  </Dialog.Content>
-</Dialog.Root>
+<ReceiptDialog {onClosePrint} {savedOrder} {printReceipt} {shop} {shouldPrintReceipt} />

@@ -40,3 +40,19 @@ export interface CartProps {
 	shop: Shop,
 	onSubmit: () => void
 }
+
+export type ReceiptData = {
+  id: string,
+  transactionDate: string,
+  items: SelectedItem[],
+  total: number,
+  totalAfterDiscount: number,
+  payment: number,
+  discount: number,
+	name: string,
+  cashier: string,
+}
+
+export interface ReceiptProps {
+	receipt: ReceiptData
+}
