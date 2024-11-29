@@ -1,6 +1,8 @@
 import type { Item, ShopItem } from "$lib/types";
 
 class Shop {
+	name;
+	cashier;
 	items = $state<ShopItem>({});
 	discount = $state(0);
 	itemsArr = $derived(Object.values(this.items!));
@@ -9,9 +11,11 @@ class Shop {
 	total = $derived(this.itemsArr.reduce((total, item) => (total = total + item.price * item.quantity), 0));
 	totalAfterDisc = $derived(this.total - this.total * (this.discount / 100));
 
-	constructor() {
+	constructor(name: string = 'Shop', cashier: string = 'Kasir') {
 		this.items = {};
 		this.discount = 0;
+		this.name = name;
+		this.cashier = cashier;
 	}
 
 	getMappedData() {
@@ -21,7 +25,8 @@ class Shop {
 			totalAfterDiscount: this.totalAfterDisc,
 			payment: this.payment,
 			discount: this.discount,
-			cashier: 'Kasir'
+			name: this.name,
+			cashier: this.cashier,
 		}
 	}
 
