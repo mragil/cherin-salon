@@ -1,6 +1,6 @@
 // @ts-expect-error package don't have type
 import PrintHub from 'printhub';
-import type { SelectedItem } from './types';
+import type { ReceiptData } from './types';
 
 type PrintOptions = {
   align?: string,
@@ -17,17 +17,6 @@ type Printer = {
   writeDashLine: () => void
 }
 
-type Data = {
-  id: string,
-  transactionDate: string,
-  items: SelectedItem[],
-  total: number,
-  totalAfterDiscount: number,
-  payment: number,
-  discount: number,
-  cashier: string
-}
-
 class ReceiptPrinter {
   printer
 
@@ -37,12 +26,12 @@ class ReceiptPrinter {
     });
   }
 
-  printData(shopData: Data) {
+  printData(shopData: ReceiptData) {
     try {
       this.printer.connectToPrint({
         onReady: async (print: Printer) => {
           // Print Header
-          await print.writeText(' Cookies Adudu', {
+          await print.writeText(shopData.name, {
             align: 'center',
             bold: true,
             size: 'double'
