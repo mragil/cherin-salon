@@ -1,1 +1,1 @@
-export const DEFAULT_DISCOUNTS = [5, 10, 20, 30, 50];
+export const DEFAULT_DISCOUNTS = [5, 10, 15 ,20, 25, 30, 35, 40, 45, 50];

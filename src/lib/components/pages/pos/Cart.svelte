@@ -18,7 +18,8 @@
 
 <Card.Root>
 	<Card.Header>
-		<Card.Title>Cart</Card.Title>
+		<Card.Title>{shop.name}</Card.Title>
+		<Card.CardDescription>Cashier: {shop.cashier}</Card.CardDescription>
 	</Card.Header>
 	<Separator class="mt-5" />
 	<Card.Content class="flex flex-col gap-5">
@@ -58,8 +59,8 @@
 		{/if}
 	</Card.Content>
 	{#if shop.itemsArr.length > 0}
-		<Card.Footer class="flex flex-wrap gap-4 text-sm font-bold">
-			<div class="flex items-center justify-center">
+		<Card.Footer class="flex flex-col items-start gap-4 text-sm font-bold">
+			<div class="flex w-full items-center justify-between">
 				<p class="">Total:</p>
 				<p class="">{formatRupiah(shop.total)}</p>
 			</div>
@@ -68,11 +69,11 @@
 				selected={shop.discount}
 				onSelected={(selected: number) => shop.setDiscount(selected)}
 			/>
-			<div class="flex items-center justify-center">
+			<div class="flex w-full items-center justify-between">
 				<p class="">Grand Total:&nbsp;</p>
 				<p class="">{formatRupiah(shop.totalAfterDisc)}</p>
 			</div>
-			<div class="flex items-center justify-center">
+			<div class="flex w-full items-center justify-between">
 				{#if shop.paymentDisplay === ''}
 					<p>Rp&nbsp;</p>
 				{/if}

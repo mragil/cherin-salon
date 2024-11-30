@@ -3,7 +3,7 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import Receipt from './Receipt.svelte';
 
-	let { shop, shouldPrintReceipt, onClosePrint, savedOrder, printReceipt } = $props();
+	let { shop, shouldPrintReceipt = $bindable(), onClosePrint, savedOrder, printReceipt } = $props();
 </script>
 
 <Dialog.Root bind:open={shouldPrintReceipt} onOpenChange={onClosePrint}>

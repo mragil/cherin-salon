@@ -5,7 +5,7 @@
 	let { discounts, onSelected, selected }: DiscountListProps = $props();
 </script>
 
-<div class="grid grid-cols-3 gap-2 text-sm">
+<div class="grid grid-cols-5 gap-2 text-sm">
 	{#each discounts as discount}
 		<Badge
 			class="pressed"

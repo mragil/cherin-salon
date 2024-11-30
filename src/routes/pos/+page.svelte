@@ -6,15 +6,27 @@
 	import ShopData from '$lib/Shop.svelte';
 	import type { Item } from '$lib/types';
 
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import ReceiptDialog from '$lib/components/pages/pos/ReceiptDialog.svelte';
 	import ReceiptPrinter from '$lib/ReceiptPrinter';
 	import type { RecordModel } from 'pocketbase';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+
+	const cashier = $page.url.searchParams.get('cashier')!;
+
+	onMount(() => {
+		if (!cashier || cashier === '') {
+			alert('Please enter your name first!');
+			goto('/');
+		}
+	});
 
 	let { data }: { data: PageData } = $props();
 	let shouldPrintReceipt = $state(false);
 	let savedOrder = $state<RecordModel | null>(null);
-	const shop = new ShopData();
+	const shop = new ShopData(undefined, cashier);
 	const printer = new ReceiptPrinter();
 
 	async function saveOrder() {
@@ -39,8 +51,10 @@
 	function onClosePrint(open: boolean) {
 		if (!open) {
 			shop.reset();
+			requestAnimationFrame(() => {
+				window.scrollTo({ top: 0, behavior: 'instant' });
+			});
 		}
-		window.scrollTo(0, 0);
 	}
 </script>
 
@@ -69,4 +83,4 @@
 	<!-- End Cart -->
 </div>
 
-<ReceiptDialog {onClosePrint} {savedOrder} {printReceipt} {shop} {shouldPrintReceipt} />
+<ReceiptDialog {onClosePrint} {savedOrder} {printReceipt} {shop} bind:shouldPrintReceipt />
