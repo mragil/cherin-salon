@@ -2,6 +2,8 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Separator } from '$lib/components/ui/separator/index.js';
+	import { Button } from '$lib/components/ui/button';
+
 	import Minus from 'lucide-svelte/icons/minus';
 	import Plus from 'lucide-svelte/icons/plus';
 	import Printer from 'lucide-svelte/icons/printer';
@@ -12,14 +14,20 @@
 	import type { CartProps } from '$lib/types';
 	import { currency, format, formatRupiah } from '$lib/utils';
 	import DiscountList from './DiscountList.svelte';
+	import { goto } from '$app/navigation';
 
 	let { shop, onSubmit }: CartProps = $props();
+
+	const navigateToHome = () => {
+		goto(`/`);
+	};
 </script>
 
 <Card.Root>
 	<Card.Header>
 		<Card.Title>{shop.name}</Card.Title>
-		<Card.CardDescription>Cashier: {shop.cashier}</Card.CardDescription>
+		<Card.CardDescription class="font-semibold">Cashier: {shop.cashier}</Card.CardDescription>
+		<Button onclick={navigateToHome}>Change Cashier</Button>
 	</Card.Header>
 	<Separator class="mt-5" />
 	<Card.Content class="flex flex-col gap-5">

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
@@ -7,12 +7,13 @@
 	let buttonDisabled = $derived(!cashier);
 	$inspect(buttonDisabled);
 
-	const navigateToCashier = () => {
+	const navigateToCashier = (e: SubmitEvent) => {
+		e.preventDefault();
 		goto(`/pos?cashier=${cashier}`);
 	};
 </script>
 
-<div class="mx-auto p-6 text-center">
+<form class="mx-auto p-6 text-center" onsubmit={navigateToCashier}>
 	<Input class="mb-10" bind:value={cashier} />
-	<Button disabled={buttonDisabled} onclick={navigateToCashier}>Enter as Cashier</Button>
-</div>
+	<Button disabled={buttonDisabled} type={"submit"}>Enter as Cashier</Button>
+</form>
