@@ -1,5 +1,5 @@
 // @ts-expect-error package don't have type
-import PrintHub from 'printhub';
+import PrintHub from './printhub';
 import type { ReceiptData } from './types';
 
 type PrintOptions = {
