@@ -59,9 +59,9 @@
 	}
 </script>
 
-<div class="flex flex-row justify-center gap-4 p-4">
+<div class="flex flex-col justify-center gap-4 p-4 md:flex-row">
 	<!-- Shop -->
-	<div class="flex h-[47rem] w-4/6 flex-col gap-5 rounded-lg bg-secondary p-5">
+	<div class="flex h-[47rem] flex-col gap-5 rounded-lg bg-secondary p-5 md:w-4/6">
 		{#await data.categories}
 			Loading categories...
 		{:then categories}
@@ -78,7 +78,7 @@
 	<!-- End Shop -->
 
 	<!-- Cart -->
-	<div class="h-[47rem] w-2/6 overflow-y-scroll scrollbar-hide">
+	<div class="h-[47rem] overflow-y-scroll scrollbar-hide md:w-2/6">
 		<Cart {shop} onSubmit={saveOrder} />
 	</div>
 	<!-- End Cart -->
