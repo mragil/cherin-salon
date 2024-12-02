@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_SHOP_NAME } from '$env/static/public';
 	import Cart from '$lib/components/pages/pos/Cart.svelte';
 	import CategoryList from '$lib/components/pages/pos/CategoryList.svelte';
 	import ItemList from '$lib/components/pages/pos/ItemList.svelte';
@@ -26,7 +27,7 @@
 	let { data }: { data: PageData } = $props();
 	let shouldPrintReceipt = $state(false);
 	let savedOrder = $state<RecordModel | null>(null);
-	const shop = new ShopData(undefined, cashier);
+	const shop = new ShopData(PUBLIC_SHOP_NAME, cashier);
 	const printer = new ReceiptPrinter();
 
 	async function saveOrder() {
