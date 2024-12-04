@@ -4,16 +4,13 @@ class Shop {
 	name;
 	cashier;
 	items = $state<ShopItem>({});
-	discount = $state(0);
 	itemsArr = $derived(Object.values(this.items!));
 	paymentDisplay = $state('');
 	payment = $derived(Number(this.paymentDisplay.substring(3).replaceAll('.', '')));
-	total = $derived(this.itemsArr.reduce((total, item) => (total = total + item.price * item.quantity), 0));
-	totalAfterDisc = $derived(this.total - this.total * (this.discount / 100));
+	total = $derived(this.itemsArr.reduce((total, item) => (total = total + item.totalPrice), 0));
 
 	constructor(name: string = 'Shop', cashier: string = 'Kasir') {
 		this.items = {};
-		this.discount = 0;
 		this.name = name;
 		this.cashier = cashier;
 	}
@@ -22,9 +19,7 @@ class Shop {
 		return {
 			items: this.itemsArr,
 			total: this.total,
-			totalAfterDiscount: this.totalAfterDisc,
 			payment: this.payment,
-			discount: this.discount,
 			name: this.name,
 			cashier: this.cashier,
 		}
@@ -32,31 +27,38 @@ class Shop {
 
 	addToCart(item: Item) {
 		if(this.items![item.id]) {
-			this.items![item.id] = {...item, quantity: this.items![item.id].quantity + 1};
+			// Item already in cart
+			// Do nothing
 		} else {
-			this.items![item.id] = {...item, quantity: 1};
+			this.items![item.id] = {...item, quantity: 1, discount: 0, totalPrice: item.price};
 		}
 	}
 
 	increaseQty(id: string) {
-		this.items![id].quantity = this.items![id].quantity + 1;
+		const item = this.items[id];
+		item.quantity = item.quantity + 1;
+		item.totalPrice = (item.price - (item.price * (item.discount / 100))) * item.quantity;
 	}
 
 	decreaseQty(id: string) {
-		if(this.items![id].quantity === 1) {
-			delete this.items![id];
+		const item = this.items[id];
+
+		if(item.quantity === 1) {
+			delete this.items[id];
 		} else {
-			this.items![id].quantity = this.items![id].quantity - 1;
+			item.quantity = item.quantity - 1;
+			item.totalPrice = (item.price - (item.price * (item.discount / 100))) * item.quantity;
 		}
 	}
 
-	setDiscount(discount: number) {
-		this.discount = discount;
+	setItemDiscount(id: string, discount: number) {
+		const item = this.items[id];
+		item.discount = discount;
+		item.totalPrice = (item.price - (item.price * (discount / 100))) * item.quantity;
 	}
 
 	reset() {
 		this.items = {};
-		this.discount = 0;
 		this.paymentDisplay = '';
 	}
 }

@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Separator } from '$lib/components/ui/separator/index.js';
-	import { Button } from '$lib/components/ui/button';
 
 	import Minus from 'lucide-svelte/icons/minus';
 	import Plus from 'lucide-svelte/icons/plus';
@@ -10,11 +10,11 @@
 	import Cart from 'lucide-svelte/icons/shopping-cart';
 	import Trash from 'lucide-svelte/icons/trash';
 
+	import { goto } from '$app/navigation';
 	import { DEFAULT_DISCOUNTS } from '$lib/constants';
 	import type { CartProps } from '$lib/types';
 	import { currency, format, formatRupiah } from '$lib/utils';
-	import DiscountList from './DiscountList.svelte';
-	import { goto } from '$app/navigation';
+	import DiscountDropdown from './DiscountDropdown.svelte';
 
 	let { shop, onSubmit }: CartProps = $props();
 
@@ -62,6 +62,22 @@
 						{/if}
 					</div>
 				</div>
+				<div class="flex items-center justify-between text-sm">
+					<p>Discount:</p>
+					<DiscountDropdown
+						discounts={DEFAULT_DISCOUNTS}
+						discount={shop.items[item.id].discount}
+						onSelected={(selected: number) => shop.setItemDiscount(item.id, selected)}
+					/>
+				</div>
+				<div class="flex items-center justify-between text-sm">
+					<div>
+						<p>Total Price:</p>
+					</div>
+					<div>
+						<p>{formatRupiah(item.totalPrice)}</p>
+					</div>
+				</div>
 				<Separator />
 			{/each}
 		{/if}
@@ -71,15 +87,6 @@
 			<div class="flex w-full items-center justify-between">
 				<p class="">Total:</p>
 				<p class="">{formatRupiah(shop.total)}</p>
-			</div>
-			<DiscountList
-				discounts={DEFAULT_DISCOUNTS}
-				selected={shop.discount}
-				onSelected={(selected: number) => shop.setDiscount(selected)}
-			/>
-			<div class="flex w-full items-center justify-between">
-				<p class="">Grand Total:&nbsp;</p>
-				<p class="">{formatRupiah(shop.totalAfterDisc)}</p>
 			</div>
 			<div class="flex w-full items-center justify-between">
 				{#if shop.paymentDisplay === ''}
@@ -94,10 +101,10 @@
 					maxlength="16"
 				/>
 			</div>
-			{#if shop.payment >= shop.totalAfterDisc}
+			{#if shop.payment >= shop.total}
 				<div class="flex items-center justify-center">
 					<p class="">Changes:&nbsp;</p>
-					<p class="">{formatRupiah(shop.payment - shop.totalAfterDisc)}</p>
+					<p class="">{formatRupiah(shop.payment - shop.total)}</p>
 				</div>
 				<Printer class="pressed m-5 mx-auto h-11 w-11" onclick={onSubmit} />
 			{/if}

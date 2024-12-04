@@ -1,4 +1,3 @@
-// @ts-expect-error package don't have type
 import PrintHub from './printhub';
 import type { ReceiptData } from './types';
 
@@ -22,7 +21,7 @@ class ReceiptPrinter {
 
   constructor() {
     this.printer = new PrintHub({
-      printerType: 'bluetooth'
+      printerType: 'bluetooth',
     });
   }
 
@@ -31,18 +30,18 @@ class ReceiptPrinter {
       this.printer.connectToPrint({
         onReady: async (print: Printer) => {
           // Print Header
-          await print.writeText(shopData.name, {
+          await print.writeText(' '+shopData.name, {
             align: 'center',
             bold: true,
             size: 'double'
           });
           await print.writeText(
-            'Jl.Bunga Mayang, Kec.Enggal, Kota Bandar Lampung, Lampung 35213',
+            ' Jl.Bunga Mayang, Kec.Enggal, Kota Bandar Lampung, Lampung 35213',
             {
               align: 'center'
             }
           );
-          await print.writeText(' 0812-3456-7890 - IG: @dduww', { align: 'center' });
+          await print.writeText('  0812-3456-7890 - IG: @dduww', { align: 'center' });
           await print.writeLineBreak();
           await print.writeText(`ID-Transaksi: ${shopData.id}`, {
             align: 'center'
@@ -55,15 +54,15 @@ class ReceiptPrinter {
             const item = shopData.items[index];
             await print.writeText(item.name, { align: 'left' });
             await print.writeTextWith2Column(`${item.quantity} pcs x ${item.price}`, `Rp${(item.quantity * item.price).toLocaleString('id-ID')}`);
+            await print.writeTextWith2Column(`Discount :`, `${item.discount}%`);
+            await print.writeTextWith2Column(`Total Harga :`, `Rp${item.totalPrice.toLocaleString('id-ID')}`);
             await print.writeDashLine();
           }
 
           // Print Total
           await print.writeTextWith2Column('Total :', `Rp${(shopData.total).toLocaleString('id-ID')}`);
-          await print.writeTextWith2Column('Diskon :', `${shopData.discount}%`);
-          await print.writeTextWith2Column('Grand Total:', `Rp${(shopData.totalAfterDiscount).toLocaleString('id-ID')}`);
           await print.writeTextWith2Column('Bayar :', `Rp${(shopData.payment).toLocaleString('id-ID')}`);
-          await print.writeTextWith2Column('Kembali :', `Rp ${(shopData.payment - shopData.totalAfterDiscount).toLocaleString('id-ID')}`);
+          await print.writeTextWith2Column('Kembali :', `Rp ${(shopData.payment - shopData.total).toLocaleString('id-ID')}`);
 
           // Print Footer
           await print.writeLineBreak();

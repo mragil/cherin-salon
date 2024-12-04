@@ -4,7 +4,7 @@
 	let { receipt }: ReceiptProps = $props();
 </script>
 
-<div class="h-full w-[80mm] rounded bg-white p-2 shadow-md mx-auto">
+<div class="mx-auto h-full w-[80mm] rounded bg-white p-2 shadow-md">
 	<!-- Print Header -->
 	<div class="text-center">
 		<h1 class="text-xl font-bold">{receipt.name}</h1>
@@ -26,8 +26,16 @@
 					<span>{item.quantity} pcs x {item.price}</span>
 				</div>
 				<div>
-					<span>Rp{(item.quantity * item.price).toLocaleString('id-ID')}</span>
+					<span>Rp {(item.quantity * item.price).toLocaleString('id-ID')}</span>
 				</div>
+			</div>
+			<div class="flex justify-between">
+				<span>Diskon :</span>
+				<span>{item.discount}%</span>
+			</div>
+			<div class="flex justify-between">
+				<span>Total Harga :</span>
+				<span>Rp {item.totalPrice.toLocaleString('id-ID')}</span>
 			</div>
 			<hr class="my-2 border-t-2 border-dashed" />
 		{/each}
@@ -35,23 +43,15 @@
 	<!-- Print Total -->
 	<div class="flex justify-between">
 		<span>Total :</span>
-		<span>Rp{receipt.total.toLocaleString('id-ID')}</span>
-	</div>
-	<div class="flex justify-between">
-		<span>Diskon :</span>
-		<span>{receipt.discount}%</span>
-	</div>
-	<div class="flex justify-between">
-		<span>Grand Total :</span>
-		<span>Rp{receipt.totalAfterDiscount.toLocaleString('id-ID')}</span>
+		<span>Rp {receipt.total.toLocaleString('id-ID')}</span>
 	</div>
 	<div class="flex justify-between">
 		<span>Bayar :</span>
-		<span>Rp{receipt.payment.toLocaleString('id-ID')}</span>
+		<span>Rp {receipt.payment.toLocaleString('id-ID')}</span>
 	</div>
 	<div class="flex justify-between">
 		<span>Kembali :</span>
-		<span>Rp{(receipt.payment - receipt.totalAfterDiscount).toLocaleString('id-ID')}</span>
+		<span>Rp {(receipt.payment - receipt.total).toLocaleString('id-ID')}</span>
 	</div>
 	<!-- Print Footer -->
 	<div class="my-2 text-center">

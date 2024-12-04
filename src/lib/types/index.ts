@@ -10,6 +10,8 @@ export type Item  = {
 
 export interface SelectedItem extends Item {
 	quantity: number,
+	discount: number,
+	totalPrice: number
 }
 
 export interface Category {
@@ -27,9 +29,15 @@ export interface DiscountListProps {
 	onSelected: (selected: number) => void
 }
 
+export interface DiscountDropdownProps {
+	discounts: number[],
+	discount: number,
+	onSelected: (selected: number) => void
+}
+
 export interface ItemListProps {
 	items: Item[],
-	onPress: (item: Item) => void
+	onPress: (item: SelectedItem) => void
 }
 
 export type ShopItem = {
@@ -46,9 +54,7 @@ export type ReceiptData = {
   transactionDate: string,
   items: SelectedItem[],
   total: number,
-  totalAfterDiscount: number,
   payment: number,
-  discount: number,
 	name: string,
   cashier: string,
 }
