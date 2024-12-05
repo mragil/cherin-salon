@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { PUBLIC_SHOP_NAME } from '$env/static/public';
-	import Cart from '$lib/components/pages/pos/Cart.svelte';
-	import CategoryList from '$lib/components/pages/pos/CategoryList.svelte';
-	import ItemList from '$lib/components/pages/pos/ItemList.svelte';
+	import Cart from './(components)/Cart.svelte';
+	import CategoryList from './(components)/CategoryList.svelte';
+	import ItemList from './(components)/ItemList.svelte';
 	import { pb } from '$lib/pocketbase';
 	import ShopData from '$lib/Shop.svelte';
 	import type { Item } from '$lib/types';
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import ReceiptDialog from '$lib/components/pages/pos/ReceiptDialog.svelte';
+	import ReceiptDialog from './(components)/ReceiptDialog.svelte';
 	import ReceiptPrinter from '$lib/ReceiptPrinter';
 	import type { RecordModel } from 'pocketbase';
 	import { onMount } from 'svelte';
