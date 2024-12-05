@@ -62,3 +62,7 @@ export type ReceiptData = {
 export interface ReceiptProps {
 	receipt: ReceiptData
 }
+
+export interface UserAuthProps {
+	loginAction: (identity: string, password: string) => Promise<void>
+}

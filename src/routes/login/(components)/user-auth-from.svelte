@@ -1,24 +1,24 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-	import { cn } from '$lib/utils.js';
+	import type { UserAuthProps } from '$lib/types';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
-	let className: string | undefined | null = undefined;
-	export { className as class };
+	let identity = $state('');
+	let password = $state('');
+	let isLoading = $state(false);
+	let { loginAction }: UserAuthProps = $props();
 
-	let isLoading = false;
-	async function onSubmit() {
+	async function onSubmit(e: SubmitEvent) {
+		e.preventDefault();
 		isLoading = true;
-
-		setTimeout(() => {
-			isLoading = false;
-		}, 3000);
+		await loginAction(identity, password);
+		isLoading = false;
 	}
 </script>
 
-<div class={cn('grid gap-6', className)} {...$$restProps}>
-	<form on:submit|preventDefault={onSubmit}>
+<div class="grid gap-6">
+	<form onsubmit={onSubmit}>
 		<div class="grid gap-2">
 			<div class="grid gap-2">
 				<Input
@@ -28,6 +28,7 @@
 					autocapitalize="none"
 					autocorrect="off"
 					disabled={isLoading}
+					bind:value={identity}
 				/>
 
 				<Input
@@ -37,6 +38,7 @@
 					autocapitalize="none"
 					autocorrect="off"
 					disabled={isLoading}
+					bind:value={password}
 				/>
 			</div>
 			<Button type="submit" disabled={isLoading}>
