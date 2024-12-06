@@ -7,7 +7,7 @@
 </script>
 
 <Table.Root>
-	<Table.Caption>A list of your recent invoices.</Table.Caption>
+	<Table.Caption>A list of your item.</Table.Caption>
 	<Table.Header>
 		<Table.Row>
 			<Table.Head class="w-[50px]">#</Table.Head>

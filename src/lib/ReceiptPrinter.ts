@@ -30,7 +30,7 @@ class ReceiptPrinter {
       this.printer.connectToPrint({
         onReady: async (print: Printer) => {
           // Print Header
-          await print.writeText(' '+shopData.name, {
+          await print.writeText('  '+shopData.name, {
             align: 'center',
             bold: true,
             size: 'double'
@@ -41,7 +41,7 @@ class ReceiptPrinter {
               align: 'center'
             }
           );
-          await print.writeText('  0812-3456-7890 - IG: @dduww', { align: 'center' });
+          await print.writeText('  0812-7151-9228 - IG: @saloncherin.id', { align: 'center' });
           await print.writeLineBreak();
           await print.writeText(`ID-Transaksi: ${shopData.id}`, {
             align: 'center'

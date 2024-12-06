@@ -75,3 +75,12 @@ export interface ReceiptProps {
 export interface UserAuthProps {
 	loginAction: (identity: string, password: string) => Promise<void>
 }
+
+export interface Order {
+	id: string,
+	created: string,
+	cashier: string,
+	total: number,
+	payment: number,
+	items: SelectedItem[]
+}

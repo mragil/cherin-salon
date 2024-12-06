@@ -12,7 +12,6 @@
 	import ReceiptPrinter from '$lib/ReceiptPrinter';
 	import type { RecordModel } from 'pocketbase';
 	import { toast } from 'svelte-sonner';
-	import type { PageData } from './$types';
 	import ReceiptDialog from './(components)/ReceiptDialog.svelte';
 
 	const cashier = $page.url.searchParams.get('cashier')!;

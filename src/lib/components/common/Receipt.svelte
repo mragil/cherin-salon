@@ -9,7 +9,7 @@
 	<div class="text-center">
 		<h1 class="text-xl font-bold">{receipt.name}</h1>
 		<p>Jl.Bunga Mayang, Kec.Enggal, Kota Bandar Lampung, Lampung 35213</p>
-		<p>0812-3456-7890 - IG: @dduww</p>
+		<p>0812-7151-9228 - IG: @saloncherin.id</p>
 	</div>
 	<div class="mt-2 text-center">
 		<p>ID-Transaksi: {receipt.id}</p>
