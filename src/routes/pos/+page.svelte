@@ -21,7 +21,7 @@
 		toast.success(`Welcome ${cashier}!`);
 	});
 
-	let { data }: { data: PageData } = $props();
+	let { data } = $props();
 	let shouldPrintReceipt = $state(false);
 	let savedOrder = $state<RecordModel | null>(null);
 	const shop = new ShopData(PUBLIC_SHOP_NAME, cashier);

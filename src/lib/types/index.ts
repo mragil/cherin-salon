@@ -8,6 +8,15 @@ export type Item  = {
 	updated: string
 }
 
+export interface ExpandedItem extends Item {
+	expand: {
+		category: {
+			label: string,
+			value: string
+		}
+	}	
+}
+
 export interface SelectedItem extends Item {
 	quantity: number,
 	discount: number,
