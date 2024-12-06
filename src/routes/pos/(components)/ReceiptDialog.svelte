@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import Receipt from './Receipt.svelte';
+	import Receipt from '$lib/components/common/Receipt.svelte';
 
 	let { shop, shouldPrintReceipt = $bindable(), onClosePrint, savedOrder, printReceipt } = $props();
 </script>
