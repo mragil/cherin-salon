@@ -106,7 +106,9 @@
 					<p class="">Changes:&nbsp;</p>
 					<p class="">{formatRupiah(shop.payment - shop.total)}</p>
 				</div>
-				<Printer class="pressed m-5 mx-auto h-11 w-11" onclick={onSubmit} />
+				<Button variant="outline" size="icon" onclick={onSubmit} class="w-20 mx-auto">
+					<Printer />
+				</Button>
 			{/if}
 		</Card.Footer>
 	{/if}
