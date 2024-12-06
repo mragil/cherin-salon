@@ -6,10 +6,10 @@
 	let { items, onPress }: ItemListProps = $props();
 </script>
 
-<div class="flex flex-wrap justify-center items-center gap-4">
+<div class="flex flex-wrap items-center justify-center gap-4">
 	{#each items as item}
 		<Card.Root
-			class="pressed flex-1 max-w-64 text-center"
+			class="pressed max-w-64 flex-1 text-center"
 			onclick={() => {
 				onPress(item);
 			}}

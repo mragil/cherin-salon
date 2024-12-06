@@ -37,7 +37,7 @@ export interface DiscountDropdownProps {
 
 export interface ItemListProps {
 	items: Item[],
-	onPress: (item: SelectedItem) => void
+	onPress: (item: Item) => void
 }
 
 export type ShopItem = {
