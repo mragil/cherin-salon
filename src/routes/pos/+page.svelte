@@ -13,12 +13,13 @@
 	import { toast } from 'svelte-sonner';
 	import ReceiptDialog from './(components)/ReceiptDialog.svelte';
 
-	const cashier = $page.url.searchParams.get('cashier')!;
+	let cashier = $page.url.searchParams.get('cashier')!;
 
 	$effect(() => {
 		toast.success(`Welcome ${cashier}!`);
 	});
 
+	let shopItem: HTMLDivElement;
 	let { data } = $props();
 	let shouldPrintReceipt = $state(false);
 	let savedOrder = $state<RecordModel | null>(null);
@@ -49,23 +50,25 @@
 
 	function onClosePrint(open: boolean) {
 		if (!open) {
-			requestAnimationFrame(() => {
-				window.scrollTo({ top: 0, behavior: 'instant' });
-			});
-			shop.reset();
+			setTimeout(() => {
+				shop.reset();
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			}, 1000);
 		}
 	}
 </script>
 
 <div class="flex flex-col justify-center gap-4 md:flex-row">
 	<!-- Shop -->
-	<div class="flex h-[47rem] flex-col gap-5 rounded-lg p-5 md:w-4/6 bg-[#f2f3f4]">
+	<div class="flex h-[47rem] flex-col gap-5 rounded-lg bg-[#f2f3f4] p-5 md:w-4/6">
 		<div>
-			{#await data.categories then categories}
+			{#await data.categories}
+				<br />
+			{:then categories}
 				<CategoryList {categories} />
 			{/await}
 		</div>
-		<div class="overflow-y-scroll scrollbar-hide">
+		<div class="overflow-y-scroll" bind:this={shopItem}>
 			{#await data.items}
 				<p class="text-center text-2xl font-bold">Loading...</p>
 			{:then items}

@@ -8,7 +8,7 @@
 
 	const navigateToCashier = (e: SubmitEvent) => {
 		e.preventDefault();
-		goto(`/pos?cashier=${cashier}`);
+		goto(`/pos?cashier=${cashier}&category=all`);
 	};
 </script>
 

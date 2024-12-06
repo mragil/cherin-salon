@@ -6,7 +6,6 @@
 	let { items, onPress }: ItemListProps = $props();
 	let searchTerm = $state('');
 	let filteredItems = $state(items);
-	$inspect(filteredItems);
 	$effect(() => {
 		if (searchTerm !== '') {
 			filteredItems = items.filter((item) =>

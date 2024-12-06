@@ -5,7 +5,7 @@
 
 	let { children } = $props();
 
-	const cashier = $page.url.searchParams.get('cashier')!;
+	let cashier = $page.url.searchParams.get('cashier')!;
 
 	$effect(() => {
 		if (!pb.authStore.isValid) {

@@ -5,17 +5,19 @@
 	import type { CategoryListProps } from '$lib/types';
 
 	let { categories }: CategoryListProps = $props();
-	let selectedCategory = $state($page.url.searchParams.get('category') || categories[0].value);
+	let selectedCategory = $state($page.url.searchParams.get('category') || 'All');
 </script>
 
 <div class="grid grid-cols-4 gap-3 text-center">
 	{#each categories as category}
 		<Badge
-			class="pressed w-32 h-8 border-2 border-black"
+			class="pressed h-8 w-32 border-2 border-black"
 			variant={selectedCategory !== category.value ? 'outline' : undefined}
 			onclick={() => {
 				selectedCategory = category.value;
-				goto(`?category=${category.value}`);
+				const newUrl = new URL($page.url);
+				newUrl?.searchParams?.set('category', category.value);
+				goto(newUrl);
 			}}
 			>{category.label}
 		</Badge>
