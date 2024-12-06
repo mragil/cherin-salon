@@ -27,12 +27,15 @@
 	const printer = new ReceiptPrinter();
 
 	async function saveOrder() {
-		try {
-			savedOrder = await pb.collection('orders').create(shop.getMappedData());
-			shouldPrintReceipt = true;
-		} catch (error) {
-			alert('Error Saved DB!!!');
-		}
+		toast.promise(pb.collection('orders').create(shop.getMappedData()), {
+			loading: 'Saving Order...',
+			success: (data) => {
+				shouldPrintReceipt = true;
+				savedOrder = data;
+				return 'Success saving your order!';
+			},
+			error: 'Failed to save order, Please try again 🙏'
+		});
 	}
 
 	function printReceipt() {
@@ -47,10 +50,10 @@
 
 	function onClosePrint(open: boolean) {
 		if (!open) {
-			shop.reset();
 			requestAnimationFrame(() => {
 				window.scrollTo({ top: 0, behavior: 'instant' });
 			});
+			shop.reset();
 		}
 	}
 </script>

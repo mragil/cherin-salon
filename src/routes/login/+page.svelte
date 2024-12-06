@@ -13,7 +13,7 @@
 
 	const login = async (identity: string, password: string) => {
 		toast.promise(pb.collection('users').authWithPassword(identity, password), {
-			loading: 'Please wait while we authenticate you!',
+			loading: 'Please wait while we authenticate you...',
 			success: () => {
 				goto(`/cashier`);
 				return 'Welcome, Please enter your name';
