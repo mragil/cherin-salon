@@ -18,8 +18,8 @@
 
 	let { shop, onSubmit }: CartProps = $props();
 
-	const navigateToHome = () => {
-		goto(`/`);
+	const navigateToCashier = () => {
+		goto(`/cashier`);
 	};
 </script>
 
@@ -27,7 +27,7 @@
 	<Card.Header>
 		<Card.Title>{shop.name}</Card.Title>
 		<Card.CardDescription class="font-semibold">Cashier: {shop.cashier}</Card.CardDescription>
-		<Button onclick={navigateToHome}>Change Cashier</Button>
+		<Button onclick={navigateToCashier}>Change Cashier</Button>
 	</Card.Header>
 	<Separator class="mt-5" />
 	<Card.Content class="flex flex-col gap-5">

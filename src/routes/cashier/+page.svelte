@@ -19,7 +19,7 @@
 	};
 </script>
 
-<form class="mx-auto p-6 text-center" onsubmit={navigateToCashier}>
+<form class="h-screen flex flex-col items-center justify-center p-6 text-center" onsubmit={navigateToCashier}>
 	<Input class="mb-10" bind:value={cashier} />
 	<Button disabled={buttonDisabled} type={'submit'}>Enter as Cashier</Button>
 </form>

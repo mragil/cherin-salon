@@ -1,18 +1,25 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pocketbase';
+	import { toast } from 'svelte-sonner';
 
 	import UserAuthForm from './(components)/user-auth-from.svelte';
 
 	$effect(() => {
-		if(pb.authStore.isValid) {
+		if (pb.authStore.isValid) {
 			goto(`/cashier`);
 		}
-	})
+	});
 
 	const login = async (identity: string, password: string) => {
-		await pb.collection('users').authWithPassword(identity, password);
-		goto(`/cashier`);
+		toast.promise(pb.collection('users').authWithPassword(identity, password), {
+			loading: 'Please wait while we authenticate you!',
+			success: () => {
+				goto(`/cashier`);
+				return 'Welcome, Please enter your name';
+			},
+			error: 'Wrong username/email or password!'
+		});
 	};
 </script>
 
