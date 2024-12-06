@@ -1,1 +1,3 @@
-export const DEFAULT_DISCOUNTS = [0, 5, 10, 15 ,20, 25, 30, 35, 40, 45, 50];
+import { PUBLIC_DISCOUNTS } from '$env/static/public';
+
+export const DEFAULT_DISCOUNTS = PUBLIC_DISCOUNTS.split(',').map((val) => Number(val));
