@@ -2,16 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-	import { pb } from '$lib/pocketbase';
 
 	let cashier = $state('');
 	let buttonDisabled = $derived(!cashier);
-
-	$effect(() => {
-		if (!pb.authStore.isValid) {
-			goto(`/login`);
-		}
-	});
 
 	const navigateToCashier = (e: SubmitEvent) => {
 		e.preventDefault();
@@ -19,7 +12,10 @@
 	};
 </script>
 
-<form class="h-screen flex flex-col items-center justify-center p-6 text-center" onsubmit={navigateToCashier}>
+<form
+	class="flex h-screen flex-col items-center justify-center p-6 text-center"
+	onsubmit={navigateToCashier}
+>
 	<Input class="mb-10" bind:value={cashier} />
 	<Button disabled={buttonDisabled} type={'submit'}>Enter as Cashier</Button>
 </form>

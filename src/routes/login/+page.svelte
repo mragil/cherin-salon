@@ -5,16 +5,15 @@
 
 	import UserAuthForm from './(components)/user-auth-from.svelte';
 
-	$effect(() => {
-		if (pb.authStore.isValid) {
-			goto(`/cashier`);
-		}
-	});
-
 	const login = async (identity: string, password: string) => {
 		toast.promise(pb.collection('users').authWithPassword(identity, password), {
 			loading: 'Please wait while we authenticate you...',
-			success: () => {
+			success: (data) => {
+				if (data.record.roles === 'admin') {
+					goto('/admin');
+
+					return 'Welcome Admin';
+				}
 				goto(`/cashier`);
 				return 'Welcome, Please enter your name';
 			},
