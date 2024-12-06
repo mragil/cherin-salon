@@ -8,7 +8,6 @@
 	import ItemList from './(components)/ItemList.svelte';
 
 	import { page } from '$app/stores';
-	import { Skeleton } from '$lib/components/ui/skeleton';
 	import ReceiptPrinter from '$lib/ReceiptPrinter';
 	import type { RecordModel } from 'pocketbase';
 	import { toast } from 'svelte-sonner';
@@ -58,26 +57,17 @@
 	}
 </script>
 
-<div class="flex flex-col justify-center gap-4 p-4 md:flex-row">
+<div class="flex flex-col justify-center gap-4 md:flex-row">
 	<!-- Shop -->
-	<div class="flex h-[47rem] flex-col gap-5 rounded-lg bg-secondary p-5 md:w-4/6">
-		{#await data.categories}
-			<div class="flex gap-4">
-				<Skeleton class="h-4 w-[40px] bg-primary" />
-				<Skeleton class="h-4 w-[40px] bg-primary" />
-				<Skeleton class="h-4 w-[40px] bg-primary" />
-				<Skeleton class="h-4 w-[40px] bg-primary" />
-			</div>
-		{:then categories}
-			<CategoryList {categories} />
-		{/await}
+	<div class="flex h-[47rem] flex-col gap-5 rounded-lg p-5 md:w-4/6 bg-[#f2f3f4]">
+		<div>
+			{#await data.categories then categories}
+				<CategoryList {categories} />
+			{/await}
+		</div>
 		<div class="overflow-y-scroll scrollbar-hide">
 			{#await data.items}
-				<div class="flex gap-4">
-					<Skeleton class="h-20 w-36 bg-primary" />
-					<Skeleton class="h-20 w-36 bg-primary" />
-					<Skeleton class="h-20 w-36 bg-primary" />
-				</div>
+				<p class="text-center text-2xl font-bold">Loading...</p>
 			{:then items}
 				<ItemList {items} onPress={(data: Item) => shop.addToCart(data)} />
 			{/await}

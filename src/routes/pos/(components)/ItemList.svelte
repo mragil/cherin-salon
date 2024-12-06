@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import { Input } from '$lib/components/ui/input/index.js';
 	import type { ItemListProps } from '$lib/types';
 	import { formatRupiah } from '$lib/utils';
 
@@ -22,7 +21,7 @@
 <div class="mb-5">
 	<input
 		type="text"
-		class="w-2/5 p-3 border-primary focus:outline-none"
+		class="w-2/5 p-3 border-primary focus:outline-none border-b-2 border-b-primary bg-[#f2f3f4]"
 		placeholder="Search by name"
 		bind:value={searchTerm}
 	/>
@@ -34,7 +33,7 @@
 	{/if}
 	{#each filteredItems as item}
 		<Card.Root
-			class="pressed max-w-64 flex-1 text-center"
+			class="pressed max-w-64 max-h-40 flex-1 text-center bg-pink-200"
 			onclick={() => {
 				onPress(item);
 			}}

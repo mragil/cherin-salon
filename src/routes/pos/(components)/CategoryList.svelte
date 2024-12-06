@@ -8,10 +8,10 @@
 	let selectedCategory = $state($page.url.searchParams.get('category') || categories[0].value);
 </script>
 
-<div class="flex gap-2">
+<div class="grid grid-cols-4 gap-3 text-center">
 	{#each categories as category}
 		<Badge
-			class="pressed"
+			class="pressed w-32 h-8 border-2 border-black"
 			variant={selectedCategory !== category.value ? 'outline' : undefined}
 			onclick={() => {
 				selectedCategory = category.value;

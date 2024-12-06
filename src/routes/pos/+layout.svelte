@@ -18,6 +18,6 @@
 	});
 </script>
 
-<div class="p-5">
+<div class="p-1">
 	{@render children()}
 </div>
