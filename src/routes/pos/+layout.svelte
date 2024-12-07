@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import { pb } from '$lib/pocketbase';
+	import screenfull from 'screenfull';
 
 	let { children } = $props();
 
@@ -12,6 +13,12 @@
 		alert('Are you sure?');
 		pb.authStore.clear();
 		goto('/login');
+	};
+
+	const toggleFullscreen = () => {
+		if (screenfull.isEnabled) {
+			screenfull.request();
+		}
 	};
 
 	$effect(() => {
@@ -29,4 +36,7 @@
 	{@render children()}
 </div>
 
-<Button class="mt-24" onclick={logout}>Logout</Button>
+<div class="flex gap-5 justify-center">
+	<Button class="mt-24" onclick={logout}>Logout</Button>
+	<Button class="mt-24" onclick={toggleFullscreen}>Full Screen</Button>
+</div>

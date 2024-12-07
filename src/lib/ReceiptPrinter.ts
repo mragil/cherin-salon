@@ -41,7 +41,7 @@ class ReceiptPrinter {
               align: 'center'
             }
           );
-          await print.writeText(' 0812-7151-9228-@saloncherin.id', { align: 'center' });
+          await print.writeText(' 081271519228 - @saloncherin.id', { align: 'center' });
           await print.writeLineBreak();
           await print.writeText(`ID-Transaksi: ${shopData.id}`, {
             align: 'center'

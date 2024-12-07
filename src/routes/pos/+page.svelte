@@ -60,7 +60,7 @@
 
 <div class="flex flex-col justify-center gap-4 md:flex-row">
 	<!-- Shop -->
-	<div class="flex h-[47rem] flex-col gap-5 rounded-lg bg-[#f2f3f4] p-5 md:w-4/6">
+	<div class="flex flex-col gap-5 rounded-lg bg-[#f2f3f4] p-5 md:w-4/6">
 		<div>
 			{#await data.categories}
 				<br />
@@ -79,7 +79,7 @@
 	<!-- End Shop -->
 
 	<!-- Cart -->
-	<div class="h-[47rem] overflow-y-scroll scrollbar-hide md:w-2/6">
+	<div class="overflow-y-scroll scrollbar-hide md:w-2/6">
 		<Cart {shop} onSubmit={saveOrder} />
 	</div>
 	<!-- End Cart -->

@@ -19,8 +19,7 @@
 	const transactionDateParams = $page.url.searchParams.get('transactionDate') || '';
 	const [year, month, day] = transactionDateParams.split('-');
 	const transactionCalenderDate = new CalendarDate(Number(year), Number(month), Number(day));
-	console.log('asli: ', transactionDateParams);
-	console.log('gil: ', transactionCalenderDate.toString());
+
 	let selectedDate = $state<DateValue | undefined>(
 		transactionDateParams ? transactionCalenderDate : undefined
 	);
