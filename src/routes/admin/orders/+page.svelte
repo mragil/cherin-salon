@@ -10,7 +10,9 @@
 
 	const onSelectedDate = (selectedDate: DateValue) => {
 		const { day, month, year } = selectedDate;
-		goto(`?transactionDate=${year}-${month}-${day < 10 ? `0${day}` : day}`);
+		goto(
+			`?transactionDate=${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`
+		);
 	};
 </script>
 
@@ -20,7 +22,7 @@
 	<Skeleton class="h-full w-full" />
 {:then orders}
 	{#if orders.length === 0}
-		<div class="h-full flex items-center justify-center">
+		<div class="flex h-full items-center justify-center">
 			<p class="text-9xl font-bold">Empty...</p>
 		</div>
 	{:else}

@@ -16,13 +16,11 @@
 	const df = new DateFormatter('id-ID', {
 		dateStyle: 'long'
 	});
-	const transactionDateParams = $page.url.searchParams.get('transactionDate');
-	const transactionDate = new Date(transactionDateParams!);
-	const transactionCalenderDate = new CalendarDate(
-		transactionDate.getFullYear(),
-		transactionDate.getMonth(),
-		transactionDate.getDate()
-	);
+	const transactionDateParams = $page.url.searchParams.get('transactionDate') || '';
+	const [year, month, day] = transactionDateParams.split('-');
+	const transactionCalenderDate = new CalendarDate(Number(year), Number(month), Number(day));
+	console.log('asli: ', transactionDateParams);
+	console.log('gil: ', transactionCalenderDate.toString());
 	let selectedDate = $state<DateValue | undefined>(
 		transactionDateParams ? transactionCalenderDate : undefined
 	);
@@ -31,6 +29,12 @@
 		onSelectedDate,
 		isOpenFilter
 	}: { onSelectedDate: (selectedDate: DateValue) => void; isOpenFilter: boolean } = $props();
+
+	$effect(() => {
+		if (!isOpenFilter) {
+			onSelectedDate(selectedDate!);
+		}
+	});
 </script>
 
 <Popover.Root bind:open={isOpenFilter}>
@@ -53,7 +57,6 @@
 			disabled={!selectedDate}
 			onclick={() => {
 				isOpenFilter = false;
-				onSelectedDate(selectedDate!);
 			}}>Filter</Button
 		>
 	</Popover.Content>
