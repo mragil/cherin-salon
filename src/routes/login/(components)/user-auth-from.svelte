@@ -8,12 +8,13 @@
 	let password = $state('');
 	let isLoading = $state(false);
 	let { loginAction }: UserAuthProps = $props();
-
 	async function onSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		isLoading = true;
-		await loginAction(identity, password);
-		isLoading = false;
+		const loginFunc = await loginAction(identity, password);
+		loginFunc(() => {
+			isLoading = false;
+		});
 	}
 </script>
 
@@ -41,7 +42,7 @@
 					bind:value={password}
 				/>
 			</div>
-			<Button type="submit" disabled={isLoading}>
+			<Button type="submit" disabled={isLoading || identity === '' || password === ''}>
 				{#if isLoading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}

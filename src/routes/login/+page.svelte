@@ -5,19 +5,23 @@
 
 	import UserAuthForm from './(components)/user-auth-from.svelte';
 
-	const login = async (identity: string, password: string) => {
+	const login = async (identity: string, password: string) => (callback: VoidFunction) => {
 		toast.promise(pb.collection('users').authWithPassword(identity, password), {
 			loading: 'Please wait while we authenticate you...',
 			success: (data) => {
 				if (data.record.roles === 'admin') {
+					callback();
 					goto('/admin');
-
 					return 'Welcome Admin';
 				}
+				callback();
 				goto(`/cashier`);
 				return 'Welcome, Please enter your name';
 			},
-			error: 'Wrong username/email or password!'
+			error: () => {
+				callback();
+				return 'Wrong username/email or password!';
+			}
 		});
 	};
 </script>

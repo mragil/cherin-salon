@@ -73,7 +73,7 @@ export interface ReceiptProps {
 }
 
 export interface UserAuthProps {
-	loginAction: (identity: string, password: string) => Promise<void>
+	loginAction: (identity: string, password: string) => Promise<(callback: VoidFunction) => void>
 }
 
 export interface Order {

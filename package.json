@@ -43,6 +43,7 @@
 	"dependencies": {
 		"pocketbase": "^0.21.5",
 		"runed": "^0.17.0",
+		"screenfull": "^6.0.2",
 		"svelte-sonner": "^0.3.28"
 	}
 }
