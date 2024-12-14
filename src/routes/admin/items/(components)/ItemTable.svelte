@@ -2,6 +2,7 @@
 	import * as Table from '$lib/components/ui/table/index.js';
 	import type { ExpandedItem } from '$lib/types';
 	import { formatRupiah } from '$lib/utils';
+	import EditItemDialog from './EditItemDialog.svelte';
 
 	let { items }: { items: ExpandedItem[] } = $props();
 </script>
@@ -14,6 +15,7 @@
 			<Table.Head>Name</Table.Head>
 			<Table.Head>Category</Table.Head>
 			<Table.Head>Price</Table.Head>
+			<Table.Head>Action</Table.Head>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
@@ -23,6 +25,9 @@
 				<Table.Cell>{item.name}</Table.Cell>
 				<Table.Cell>{item.expand.category.label}</Table.Cell>
 				<Table.Cell>{formatRupiah(item.price)}</Table.Cell>
+				<Table.Cell>
+					<EditItemDialog {item} />
+				</Table.Cell>
 			</Table.Row>
 		{/each}
 	</Table.Body>

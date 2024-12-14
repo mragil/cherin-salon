@@ -24,6 +24,7 @@ export interface SelectedItem extends Item {
 }
 
 export interface Category {
+	id: string,
 	label: string,
 	value: string
 }

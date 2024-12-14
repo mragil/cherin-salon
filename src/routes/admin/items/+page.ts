@@ -1,7 +1,7 @@
 export const ssr = false;
 
 import { pb } from '$lib/pocketbase';
-import type { ExpandedItem } from '$lib/types';
+import type { Category, ExpandedItem } from '$lib/types';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
@@ -17,7 +17,12 @@ export const load: PageLoad = async () => {
 		expand: 'category'
 	});
 
+	const categories = pb.collection('categories').getFullList<Category>({
+		sort: '+label'
+	});
+
 	return {
-		items
+		items,
+		categories
 	}
 };
