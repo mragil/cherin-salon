@@ -26,12 +26,18 @@
 	let contentRef = $state<HTMLElement | null>(null);
 	let {
 		onSelectedDate,
-		isOpenFilter
-	}: { onSelectedDate: (selectedDate: DateValue) => void; isOpenFilter: boolean } = $props();
+		isOpenFilter,
+		onShowAll
+	}: { onSelectedDate: (selectedDate: DateValue) => void; onShowAll: () => void; isOpenFilter: boolean } = $props();
+
+	$inspect(selectedDate);
 
 	$effect(() => {
-		if (!isOpenFilter) {
-			onSelectedDate(selectedDate!);
+		if (!isOpenFilter && selectedDate) {
+			onSelectedDate(selectedDate);
+		}
+		if (!isOpenFilter && !selectedDate) {
+			onShowAll();
 		}
 	});
 </script>
@@ -47,16 +53,15 @@
 		)}
 	>
 		<CalendarIcon />
-		{selectedDate ? df.format(selectedDate.toDate(getLocalTimeZone())) : 'Pick a date'}
+		{selectedDate ? df.format(selectedDate.toDate(getLocalTimeZone())) : 'Showing All Orders'}
 	</Popover.Trigger>
 	<Popover.Content bind:ref={contentRef} class="flex w-auto flex-col items-center p-0">
 		<Calendar type="single" bind:value={selectedDate} />
 		<Button
 			class="w-full"
-			disabled={!selectedDate}
 			onclick={() => {
 				isOpenFilter = false;
-			}}>Filter</Button
+			}}>{selectedDate ? 'Filter': 'Show All'}</Button
 		>
 	</Popover.Content>
 </Popover.Root>
