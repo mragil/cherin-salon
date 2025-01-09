@@ -58,16 +58,14 @@
 	}
 </script>
 
-<div class="flex flex-col justify-center gap-4 md:flex-row">
+<div class="flex flex-col justify-center gap-4 h-screen md:flex-row">
 	<!-- Shop -->
 	<div class="flex flex-col gap-5 rounded-lg bg-[#f2f3f4] p-5 md:w-4/6">
-		<div>
 			{#await data.categories}
 				<br />
 			{:then categories}
 				<CategoryList {categories} />
 			{/await}
-		</div>
 		<div class="overflow-y-scroll" bind:this={shopItem}>
 			{#await data.items}
 				<p class="text-center text-2xl font-bold">Loading...</p>

@@ -8,10 +8,10 @@
 	let selectedCategory = $state($page.url.searchParams.get('category') || 'All');
 </script>
 
-<div class="grid grid-cols-4 gap-3 text-center">
+<div class="text-center">
 	{#each categories as category}
 		<Badge
-			class="pressed h-8 w-32 border-2 border-black"
+			class="pressed h-8 w-32 m-1 border-2 border-black"
 			variant={selectedCategory !== category.value ? 'outline' : undefined}
 			onclick={() => {
 				selectedCategory = category.value;
@@ -19,7 +19,7 @@
 				newUrl?.searchParams?.set('category', category.value);
 				goto(newUrl);
 			}}
-			>{category.label}
+			>{category.label.substring(0, 16)}
 		</Badge>
 	{/each}
 </div>
