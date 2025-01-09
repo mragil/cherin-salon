@@ -30,6 +30,14 @@
 						url: '/admin/orders'
 					}
 				]
+			},
+			{
+				items: [
+					{
+						title: 'Logout',
+						url: '/logout'
+					}
+				]
 			}
 		]
 	};
