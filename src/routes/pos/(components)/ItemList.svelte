@@ -26,13 +26,13 @@
 	/>
 </div>
 
-<div class="flex flex-wrap items-center justify-center gap-4">
+<div class="grid grid-cols-4 gap-5">
 	{#if filteredItems.length === 0}
 		<p class="mt-20 text-2xl font-bold">{searchTerm} Not Found</p>
 	{/if}
 	{#each filteredItems as item}
 		<Card.Root
-			class="pressed max-w-64 max-h-40 flex-1 text-center bg-pink-200"
+			class="pressed text-center bg-pink-200"
 			onclick={() => {
 				onPress(item);
 			}}
