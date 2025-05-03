@@ -24,15 +24,16 @@
 		placeholder="Search by name"
 		bind:value={searchTerm}
 	/>
+
+	{#if filteredItems.length === 0}
+		<p class="mt-5 text-2xl font-bold">{searchTerm} Not Found</p>
+	{/if}
 </div>
 
-<div class="grid grid-cols-4 gap-5">
-	{#if filteredItems.length === 0}
-		<p class="mt-20 text-2xl font-bold">{searchTerm} Not Found</p>
-	{/if}
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-5 overflow-clip">
 	{#each filteredItems as item}
 		<Card.Root
-			class="pressed text-center bg-pink-200"
+			class="pressed text-center bg-pink-200 overflow-ellipsis"
 			onclick={() => {
 				onPress(item);
 			}}

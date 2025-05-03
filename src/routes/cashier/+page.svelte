@@ -2,16 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
-	import screenfull from 'screenfull';
 
 	let cashier = $state('');
 	let buttonDisabled = $derived(!cashier);
 
 	const navigateToCashier = (e: SubmitEvent) => {
 		e.preventDefault();
-		if (screenfull.isEnabled) {
-			screenfull.request();
-		}
 		goto(`/pos?cashier=${cashier}&category=all`);
 	};
 </script>
